@@ -1,0 +1,20 @@
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  name: ant-exceptions-log
+  labels:
+      app: ant
+      version: v1
+spec:
+  schedule: "59 * * * *"
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+          - name: ant-exceptions-log
+            image: "docker-registry:8080/ant-exceptions-log:latest"
+            imagePullPolicy: Always
+            command: ["./flower"]
+            args: ["-fmt", "text", "-interval", "32"]
+          restartPolicy: Never
