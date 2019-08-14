@@ -2,7 +2,6 @@ package main
 
 import (
 	"github.com/BurntSushi/toml"
-	"log"
 )
 
 // Config structure. Is used by tha mailer to send emails to right audience
@@ -18,6 +17,6 @@ type Config struct {
 // Parses a config file and references config settings.
 func (c *Config) Read() {
 	if _, err := toml.DecodeFile("config/config.toml", &c); err != nil {
-		log.Fatal(err)
+		logger.Fatal(err)
 	}
 }

@@ -5,7 +5,6 @@ import (
 	"encoding/json"
 	"flag"
 	"fmt"
-	li "logwrapper"
 	"net/http"
 	"regexp"
 	"strconv"
@@ -20,13 +19,13 @@ var client http.Client
 var flFormatter string
 var flLogLovel string
 var flInterval int
-var logger *li.StandardLogger
+var logger StandardLogger
 
 func init() {
 	flag.StringVar(&flFormatter, "fmt", "json", "pick logger formatter: json(default) or text")
 	flag.StringVar(&flLogLovel, "lvl", "info", "specify logging level, e.g. warn, info, debug")
 	flag.IntVar(&flInterval, "interval", 24, "specify interface whithin we search for exceptions, default is 24")
-	logger = li.NewLogger()
+	logger = NewLogger()
 	config.Read()
 }
 
