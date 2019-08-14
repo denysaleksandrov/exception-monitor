@@ -1,0 +1,5 @@
+flowerApiUrl="http://ant-emea:5555/api/tasks"
+server="relay"
+port=25
+email="flower-emea@trading.imc.intra"
+receivers=["denys.aleksandrov@imc.com"]
