@@ -74,7 +74,6 @@ func (r *Request) sendMail() bool {
 	if err := d.DialAndSend(m); err != nil {
 		return false
 	}
-	os.Remove(r.attachment)
 	return true
 }
 
