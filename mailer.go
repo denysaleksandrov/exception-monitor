@@ -55,8 +55,8 @@ func (r *Request) parseMessages(d Data) error {
 	table.Render()
 	str.WriteString("\n\n")
 	str.WriteString(fmt.Sprintf("This email is sent from: %s", hostname))
-	logger.Debug(str.String())
 	r.body = str.String()
+	logger.Debug(r.body)
 	return nil
 }
 
