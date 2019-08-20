@@ -1,0 +1,44 @@
+<htlm>
+ <head>
+  <style>
+  table, th, td {
+   border: 1px solid black;
+  }
+  </style>
+ </head>
+ <body>
+   <div>
+     Exceptions raised by celery workers during last {{ .Interval }} hours<br>
+     <p></p>
+   </div>
+   {{ if .NewExceptions }}
+   <div>
+     Number of new exceptions: {{ .NewExceptions }}
+     <p></p>
+     <table>
+      <tr>
+        <th>Index</th>
+        <th>OS</th>
+        <th>Exception</th>
+        <th>Device</th>
+        <th>Date</th>
+      </th>
+      {{ range $i, $exc := .Exceptions }}
+      <tr>
+        {{ range $y, $e := $exc }}
+        <td>
+          {{ $e }}
+        </td>
+        {{ end }}
+      </tr>
+      {{ end }}
+     </table>
+   </div>
+   {{ else }}
+   <div>
+     Number of new exceptions: 0
+   </div>
+   {{- end }}
+
+ <body>
+</html>

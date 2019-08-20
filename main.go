@@ -19,12 +19,14 @@ var client http.Client
 var flFormatter string
 var flLogLovel string
 var flInterval int
+var flSendEmail bool
 var logger StandardLogger
 
 func init() {
 	flag.StringVar(&flFormatter, "fmt", "json", "pick logger formatter: json(default) or text")
 	flag.StringVar(&flLogLovel, "lvl", "info", "specify logging level, e.g. warn, info, debug")
 	flag.IntVar(&flInterval, "interval", 24, "specify interface whithin we search for exceptions, default is 24")
+	flag.BoolVar(&flSendEmail, "email", false, "set if you want to send list of exceptions by email")
 	logger = NewLogger()
 	config.Read()
 }
@@ -66,13 +68,7 @@ func (d Data) GetBulk() [][]string {
 	index := 1
 	for exception, messs := range sortedByException {
 		for _, mess := range messs {
-			var mode string
-			if mess.Timestamp.Before(time.Now().Add(-24 * time.Hour)) {
-				mode = "update"
-			} else {
-				mode = "dryrun"
-			}
-			list = append(list, []string{fmt.Sprintf("%d", index), mess.DeviceOs, exception, mess.DeivceName, mess.Timestamp.String(), mode})
+			list = append(list, []string{fmt.Sprintf("%d", index), mess.DeviceOs, exception, mess.DeivceName, mess.Timestamp.String()})
 			index++
 		}
 	}
