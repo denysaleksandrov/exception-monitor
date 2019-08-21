@@ -16,5 +16,5 @@ spec:
             image: "docker-registry:8080/ant-exceptions-log:latest"
             imagePullPolicy: Always
             command: ["./flower"]
-            args: ["-fmt", "text", "-interval", "32"]
+            args: ["-fmt", "text", "-interval", "24", "-email"]
           restartPolicy: Never
