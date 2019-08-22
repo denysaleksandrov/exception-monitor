@@ -37,6 +37,6 @@ metadata:
   name: ant-exceptions-config-map
 data:
   API: |
-    http://ant-emea:5555
+    http://ant-emea:5555/api/tasks
   RECEIVERS: |
     denys.aleksandrov@imc.com    # comma separated list of emails
