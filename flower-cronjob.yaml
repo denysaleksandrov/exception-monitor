@@ -30,8 +30,7 @@ spec:
                   key: RECEIVERS
           restartPolicy: Never
 
---
-
+---
 apiVersion: v1
 kind: ConfigMap
 metadata:
