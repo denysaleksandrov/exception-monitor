@@ -6,6 +6,7 @@ import (
 	"flag"
 	"fmt"
 	"net/http"
+	"os"
 	"regexp"
 	"strconv"
 	"strings"
@@ -157,7 +158,11 @@ func (message Message) toString() string {
 func handleFailedTasks() (error, bool) {
 	now := time.Now()
 	bod := now.Add(-time.Duration(flInterval) * time.Hour)
-	resp, err := client.Get(fmt.Sprintf("%s?state=FAILURE&limit=0", config.FlowerApiUrl))
+	flowerApi := os.Getenv("flowerApi")
+	if flowerApi == "" {
+		flowerApi = config.FlowerApiUrl
+	}
+	resp, err := client.Get(fmt.Sprintf("%s?state=FAILURE&limit=0", flowerApi))
 	if err != nil {
 		return err, true
 	}
@@ -191,7 +196,14 @@ func handleFailedTasks() (error, bool) {
 		data[k] = v
 	}
 	subject := fmt.Sprint("Celery exceptions")
-	receivers := config.Receivers
+	var receivers []string
+	receiversEnv := os.Getenv("flowerReceivers")
+	if receiversEnv == "" {
+		receivers = config.Receivers
+	} else {
+		receivers = strings.Split(receiversEnv, ",")
+	}
+
 	r := NewRequest(receivers, subject)
 	if err, ok := r.Send(data); !ok {
 		return err, true

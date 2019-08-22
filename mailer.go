@@ -78,9 +78,7 @@ func (r *Request) parseMessages(d Data) error {
 func (r *Request) sendMail() bool {
 	m := gomail.NewMessage()
 	m.SetAddressHeader("From", config.Email, strings.ToUpper(strings.Split(config.Email, "@")[0]))
-	for _, to := range r.to {
-		m.SetAddressHeader("To", to, strings.ToUpper(strings.Split(to, ".")[0]))
-	}
+	m.SetHeader("To", r.to...)
 	m.SetHeader("Subject", r.subject)
 	m.SetBody("text/html", r.body)
 	d := gomail.Dialer{Host: config.Server, Port: config.Port}
