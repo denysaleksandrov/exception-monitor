@@ -17,17 +17,9 @@ spec:
             imagePullPolicy: Always
             command: ["./flower"]
             args: ["-fmt", "text", "-interval", "24", "-email"]
-            env:
-            - name: flowerApi
-              valueFrom:
-                configMapKeyRef:
-                  name: ant-exceptions-config-map
-                  key: API
-            - name: flowerReceivers
-              valueFrom:
-                configMapKeyRef:
-                  name: ant-exceptions-config-map
-                  key: RECEIVERS
+            envFrom:
+            - configMapRef:
+                name: ant-exceptions-config-map
           restartPolicy: Never
 
 ---
@@ -36,7 +28,7 @@ kind: ConfigMap
 metadata:
   name: ant-exceptions-config-map
 data:
-  API: |
-    http://ant-emea:5555/api/tasks
-  RECEIVERS: |
-    denys.aleksandrov@imc.com    # comma separated list of emails
+  flowerApi: |
+    http://ant-emea.trading.imc.intra:5555/api/tasks
+  flowerReceivers: |
+    denys.aleksandrov@imc.com
