@@ -28,7 +28,7 @@ kind: ConfigMap
 metadata:
   name: ant-exceptions-config-map
 data:
-  flowerApi: |
+  flowerApi: |-
     http://ant-emea.trading.imc.intra:5555/api/tasks
-  flowerReceivers: |
+  flowerReceivers: |-
     denys.aleksandrov@imc.com
