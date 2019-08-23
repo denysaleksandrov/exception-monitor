@@ -1,0 +1,24 @@
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  name: ant-exceptions-log
+  labels:
+    app: ant
+    version: v1
+spec:
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+          - image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+            imagePullPolicy: {{ .Values.image.pullPolicy }}
+            name: ant-exceptions-log
+            command: ["./flower"]
+            args: [{{ template "Join" .Values.args }}]
+            envFrom:
+            - configMapRef:
+                name: ant-exceptions-configmap
+          restartPolicy: Never
+  schedule: {{ .Values.schedule | quote }}
+  successfulJobsHistoryLimit: 1
